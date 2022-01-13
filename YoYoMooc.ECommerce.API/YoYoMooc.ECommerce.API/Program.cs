@@ -1,18 +1,18 @@
-using Microsoft.AspNetCore.Hosting;
 
-using YoYoMooc.ECommerce.API;
+var builder = WebApplication.CreateBuilder(args);
 
-public class Program
-{
-    public static void Main(string[] args)
-    {
-        CreateHostBuilder(args).Build().Run();
-    }
+// Add services to the container.
+builder.Services.AddControllers();
 
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder =>
-{
-                webBuilder.UseStartup<Startup>();
-            });
-}
+
+
+
+   
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+
+app.MapControllers();
+
+app.Run();
