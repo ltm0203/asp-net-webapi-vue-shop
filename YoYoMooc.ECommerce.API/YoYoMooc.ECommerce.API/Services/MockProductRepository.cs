@@ -9,12 +9,12 @@ namespace YoYoMooc.ECommerce.API.Services
         public MockProductRepository()
         {
                      _productList = new List<Product> {
-                new Product { Name = "空调", Category = "分类1", Price = 100 },
-                new Product { Name = "电视机", Category = "分类1", Price = 100 },
-                new Product { Name = "油烟机", Category = "分类2", Price = 100 },
-                new Product { Name = "冰箱", Category = "分类2", Price = 100 },
-                new Product { Name = "猪肉", Category = "分类2", Price = 100 },
-                new Product { Name = "牛肉", Category = "分类2", Price = 100 },
+                new Product { Id=1,Name = "空调", Category = "分类1", Price = 100 },
+                new Product { Id=2,Name = "电视机", Category = "分类1", Price = 100 },
+                new Product {Id=3,Name = "油烟机", Category = "分类2", Price = 100 },
+                new Product {Id=4,Name = "冰箱", Category = "分类2", Price = 100 },
+                new Product {Id=5,Name = "猪肉", Category = "分类2", Price = 100 },
+                new Product {Id=6,Name = "牛肉", Category = "分类2", Price = 100 },
                                     };
         }
 

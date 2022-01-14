@@ -21,3 +21,8 @@ namespace YoYoMooc.ECommerce.API.Models
         public decimal Price { get; set; }
     }
 }
+
+
+
+
+

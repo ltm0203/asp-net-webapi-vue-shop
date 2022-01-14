@@ -3,13 +3,12 @@
 using YoYoMooc.ECommerce.API.Models;
 using YoYoMooc.ECommerce.API.Services;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
+ 
 namespace YoYoMooc.ECommerce.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class ProductController : Controller
     {
 
         private readonly IProductRepository _productRepository;
@@ -19,36 +18,72 @@ namespace YoYoMooc.ECommerce.API.Controllers
              _productRepository = productRepository;
         }
 
-        // GET: api/<ValuesController>
+        // GET: api/<ProductController>
         [HttpGet]
-        public IEnumerable<Product> Get()
+        public ActionResult<IEnumerable<Product>> GetAllProducts()
         {
-             return _productRepository.GetAllProducts(); 
+             return Ok(_productRepository.GetAllProducts()); 
         }
 
-        // GET api/<ValuesController>/5
+ 
+
+        // GET api/<ProductController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ActionResult<Product> GetProductById(int id)
         {
-            return "value";
+        var product=   _productRepository.GetProductById(id);
+
+
+            if (product!=null)
+            {
+                return product;
+            }
+
+            return NotFound();
+
         }
 
-        // POST api/<ValuesController>
+        // POST api/<ProductController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<Product> CreateProduct(Product product)
         {
+            var newProduct = _productRepository.CreateProduct(product);
+        
+            return Ok(newProduct);
+        
         }
 
-        // PUT api/<ValuesController>/5
+        // PUT api/<ProductController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult<Product> UpdateProduct(int id, Product updateProduct)
         {
-        }
 
-        // DELETE api/<ValuesController>/5
+           var model=       _productRepository.GetProductById(id);
+            if (model==null)
+            {
+                return NotFound();
+            }
+
+        var product=    _productRepository.UpdateProduct(updateProduct);
+
+          //  return NoContent();
+            return product;
+
+        }
+         
+        // DELETE api/<ProductController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult DeleteProduct(int id)
         {
+            var model = _productRepository.GetProductById(id);
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            _productRepository.DeleteProduct(model.Id);
+
+            return NoContent();
         }
     }
 }
