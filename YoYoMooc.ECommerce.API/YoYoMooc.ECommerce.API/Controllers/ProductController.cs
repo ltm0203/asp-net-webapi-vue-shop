@@ -16,13 +16,13 @@ namespace YoYoMooc.ECommerce.API.Controllers
             _productRepository = productRepository;
         }
 
-        // GET: api/<ProductController>
-        [HttpGet]
+        /// <summary>
+        /// 获取所有的产品列表信息
+        /// </summary>
+        /// <returns></returns>       
+        [HttpGet]        
         public ActionResult<IEnumerable<Product>> GetAllProducts()
-        {
-
-            
-
+        {               
             return Ok(_productRepository.GetAllProducts());
         }
 
@@ -43,8 +43,33 @@ namespace YoYoMooc.ECommerce.API.Controllers
             return NotFound();
         }
 
-        // POST api/<ProductController>
+
+        /// <summary>
+        /// 创建一个产品信息
+        /// </summary>
+        /// <param name="product">产品实体信息</param>
+        ///<returns>将会返回一个新的产品信息</returns>
+        /// <remarks>
+        /// 示例代码:
+        ///
+        ///     POST API/Product
+        ///     {
+        ///        "id": 1,
+        ///        "name": "空调",
+        ///        "category": "家用电器",
+        ///        "price": 200
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="200">返回一个新的产品信息</response>
+        /// <response code="400">如果产品信息没有通过验证</response>
+        /// <response code="500">无法提交正确的产品信息到数据库中</response>
+
         [HttpPost]
+        [ProducesResponseType(typeof(Product), 200)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
         public ActionResult<Product> CreateProduct(Product product)
         {
             var newProduct = _productRepository.CreateProduct(product);
@@ -68,7 +93,7 @@ namespace YoYoMooc.ECommerce.API.Controllers
             return product;
         }
 
-        // DELETE api/<ProductController>/5
+        [ApiExplorerSettings(GroupName = "v2")]
         [HttpDelete("{id}")]
         public ActionResult DeleteProduct(int id)
         {
