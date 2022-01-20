@@ -44,22 +44,19 @@ builder.Services.AddSingleton<IProductRepository, MockProductRepository>();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
-
+ app.UseStaticFiles();
 
 if (app.Environment.IsDevelopment())
 {
     // 启用中间件Swagger
     app.UseSwagger();
-
-
-
     //启用中间件Swagger -ui服务，它需要与Swagger配置在一起
     app.UseSwaggerUI(c =>
     {
+        c.InjectStylesheet("/swagger-ui/custom.css");
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "API V1");
         c.SwaggerEndpoint("/swagger/v2/swagger.json", "API V2");
     });
-
 }
  
 //启用路由服务
