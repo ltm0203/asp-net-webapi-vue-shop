@@ -1,15 +1,27 @@
 
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-
 using System.Reflection;
 
+using YoYoMooc.ECommerce.API.Data;
 using YoYoMooc.ECommerce.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
  builder.Services.AddControllers();
+
+
+//配置连接字符串
+var connectionString = builder.Configuration.GetConnectionString("Default");
+//配置mysql的版本号
+var serverVersion = new MySqlServerVersion(new Version(8, 0, 27));
+
+builder.Services.AddDbContextPool<EcommerceContext>(opt =>
+    opt.UseMySql(connectionString, serverVersion));
+
+
 
 // 注册Swagger生成器，定义一个或多个Swagger文档
 builder.Services.AddSwaggerGen(c =>
@@ -42,6 +54,10 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddSingleton<IProductRepository, MockProductRepository>();
 
+
+
+
+
 var app = builder.Build();
 // Configure the HTTP request pipeline.
  app.UseStaticFiles();
@@ -58,7 +74,8 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/v2/swagger.json", "API V2");
     });
 }
- 
+
+
 //启用路由服务
 app.UseRouting();
 //配置路由规则

@@ -5,9 +5,9 @@ using YoYoMooc.ECommerce.API.Services;
 
 namespace YoYoMooc.ECommerce.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
-    public class ProductController : Controller
+    public class ProductController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
 
@@ -20,9 +20,14 @@ namespace YoYoMooc.ECommerce.API.Controllers
         /// 获取所有的产品列表信息
         /// </summary>
         /// <returns></returns>       
-        [HttpGet]        
+        [HttpGet]
         public ActionResult<IEnumerable<Product>> GetAllProducts()
-        {               
+        {
+            return Ok(_productRepository.GetAllProducts());
+        }
+        [HttpGet]
+        public ActionResult<IEnumerable<Product>> GetAll()
+        {
             return Ok(_productRepository.GetAllProducts());
         }
 
